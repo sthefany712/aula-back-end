@@ -85,17 +85,14 @@ entradaDeDados.question('Digite o nome do aluno:', function(nome){
                     if(nomeAluno == '' || nota1 == '' || nota2 == '' || nota3 == '' || nota4 == ''){
                         console.log('ERRO: é obrigatório o preenchimento de todos os dados !!!')
 
-                    }else if(nota1 < '0' ||  nota1 > '100' || nota2 < '0' || nota2 > '100' || nota3 < '0' || nota3 > '100' || nota4 <'0' || nota4 > '100'){ 
-                        console.log('Notas não existentes !!!')
+                        //Validação de números entre 0 e 100
+                    }else if(nota1 < 0 ||  nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 <0 || nota4 > 100){ 
+                        console.log('Notas invalidas !!!')
 
                     }else{
                         //Calcular a média
                     }
-
                     
-
-
-
                 })//Fecha a nota 4
             })//Fecha a nota 3
         })//Fecha a nota 2
