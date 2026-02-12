@@ -13,7 +13,7 @@
 //Método tradicional de criar uma função
 //PRA ESSA FUNÇÃO CONSEGUIR CALCULAR OS JUROS, VOCê PRECISA ENTRAR COM O VALOR DO PRODUTO, A TAXA QUE SERIA OS JUROS
 //E O TEMPO DE PAGAMENTO:::
-function calcularJurosCompostos(valorCompra, taxaJuros, tempoPagto) {
+function calcularJurosCompostos(valorCompra, taxaJuros, tempoPagto){
     //Recebe os argumentos da função em variáveis locais
     //As váriaveis (valor, taxa e tempo númericas por conta da conversão)
     //Mas os argumentos (valorCompra, taxaJuros, tempoPagto ainds será Strings)
