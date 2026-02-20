@@ -19,23 +19,22 @@ const entradaDeDados = readline.createInterface({
 //Primeiro valor
 entradaDeDados.question('Digite o PRIMEIRO número: ', function (valorUM) {
     let numeroPrimeiro = valorUM
-
+ 
     //Segundo valor
     entradaDeDados.question('Digite o SEGUNDO número: ', function (valorDois) {
         let numeroSegundo = valorDois
-
+        
         //Operação matemática
         entradaDeDados.question('Informe qual operação deseja realizar: ', function (operacao) {
             let operacaoEscolhida = operacao
-
+          
             //let é uma variável
 
             //pasta
             let calculos = require('./modulo/calculo')
             let resultado = calculos.calculo(numeroPrimeiro, numeroSegundo, operacaoEscolhida)
             //p/ mim entrar nessa pasta eu preciso desses 3 parametros que já estão prontos
-            console.log(resultado)
-
+            console.log('Resultado final: '+ resultado)
         })
     })
 })
