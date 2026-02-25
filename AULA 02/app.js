@@ -6,6 +6,15 @@
 ************************************************************************************************** */
 
 /*
+    O que é uma variável?
+    é tudo aquilo que está sujeito a variações, que é incerto, instável ou insconstante.
+
+    Conceito:
+    Imagine que a memória principal de um computador é um arquivo com muitas gavetas,
+    e cada uma só pode armazenar um valor por vez. Por ser um arquivo com várias gavetas,
+    é necessário que casa uma das gavetas seja identificada com um nome. Desta forma, 
+    o valor pode ser utilizado a qualquer momento.
+
     Existem 3 formas de criação de variáveis
 
     var -> Permite a criação de um espaço na memória 
