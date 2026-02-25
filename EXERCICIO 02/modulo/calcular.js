@@ -4,12 +4,24 @@
  * Versão: 1.0
  * Autor: Sthefany Correia 
  ***********************************************************************************************/
+
 //toLowerCase() -> Retorna a string em minusculo
 //toUpperCase() -> Retorna a string em MAISCULO
 //muito usado em condicionais
 
 //Modelo de função anonima
 //Caclcular as 4 operações matemáticas
+//Seleciona a operação
+
+
+const validarDados = function(valor1,valor2,operador){
+    if(valor1 == '' || isNaN (valor1) || valor2 == '' || isNaN(valor2)){
+        return false
+    }else{
+        return true
+    }
+}
+
 const calcular = function (numero1, numero2, operador){
     //Entrada da função
     let valor1             = Number(numero1)
@@ -34,19 +46,19 @@ const calcular = function (numero1, numero2, operador){
     
     switch (operadorMatematico) {
         case 'SOMAR': //if
-            resultado = valor1 + valor2
+            resultado = somar(valor1,valor2)
             break;
 
         case 'SUBTRAIR': //else if
-            resultado = valor1 - valor2
+            resultado = subtrair(valor1,valor2)
             break;
 
         case 'MULTIPLICAR': //else if
-            resultado = valor1 * valor2
+            resultado = multiplicar(valor1,valor2)
             break;
 
         case 'DIVIDIR': //else if
-            resultado = valor1 / valor2
+            resultado = dividir(valor1,valor2)
             break;
         default: return false //else (último else da estrutura tradicional)
             break;
@@ -65,5 +77,25 @@ const calcular = function (numero1, numero2, operador){
         // o resultado será falso
 }
 
-console.log(calcular (10, 60 ,'somar'))
+//Exemplos de funções baseada em SETA (Arrow function)
+//Funções para realizar as operações matemáticas
+//=>torna uma função. A seta diz: "execute oq está na sequência"
+//função baseada em seta já tem a caracteristica de retornar, por isso não precisa do return
+//Criando uma váriavel separada p/ cada operação tenho a possibilidade de chamar somente
+//função que eu quero usar, ao invés de usar calculo posso ir direto pra soma por exemplo.
+const somar         = (numero1,numero2) => Number(numero1) + Number(numero2) 
+const subtrair      = (numero1,numero2) => Number(numero1) - Number(numero2) 
+const multiplicar   = (numero1,numero2) => Number(numero1) * Number(numero2) 
+const dividir       = (numero1,numero2) => Number(numero1) / Number(numero2) 
+
+//console.log(calcular (10, 60 ,'somar'))
+
+module.exports = {
+    calcular,
+    validarDados,
+    somar,
+    subtrair, 
+    multiplicar,
+    dividir
+}
 
