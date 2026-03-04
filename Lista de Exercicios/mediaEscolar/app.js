@@ -7,10 +7,39 @@
 
 const recebendoDados = require('./modulo/calculos.js')
 
-let nomeAluno = Joao
+let nomeAluno = 'Sthefany'
+let nomeProf = 'Marcel'
+let sexoProf = 'Masculino'
+let sexoAluno = 'Feminino'
+let nomeCurso = 'Desenvolvimento de Sistemas'
+let nomeDisci = 'Backend'
 
-let respostas = nomeAluno
-console.log(respostas)
+let nota1 = 4
+let nota2 = 7
+let nota3 = 8
+let nota4 = 9
 
-let validar = recebendoDados.entradaDeDados(nomeAluno)
+let tipoProf = ''
+
+let validar = recebendoDados.registrarDados(nomeAluno,
+    nomeProf, 
+    sexoProf, 
+    sexoAluno,
+    nomeCurso, 
+    nomeDisci,
+    nota1,
+    nota2,
+    nota3, 
+    nota4
+)
+
+// if(sexoProf == 'feminino'){
+//     tipoProf = 'professora'
+// }else{
+//     tipoProf = 'professor'
+// }
+
+// return tipoProf
+    
+    
 console.log(validar)
