@@ -5,41 +5,71 @@
  * Versão:1.0
  * *********************************************************************************/ 
 
-const recebendoDados = require('./modulo/calculos.js')
+const recebendoValor = require('./modulo/calculos.js')
 
-let nomeAluno = 'Sthefany'
-let nomeProf = 'Marcel'
-let sexoProf = 'Masculino'
-let sexoAluno = 'Feminino'
-let nomeCurso = 'Desenvolvimento de Sistemas'
-let nomeDisci = 'Backend'
+let nota1 = 5
+let nota2 = 8
+let nota3 = 9
+let nota4 = 6
 
-let nota1 = 4
-let nota2 = 7
-let nota3 = 8
-let nota4 = 9
+let resultado = recebendoValor.limitarValores(nota1,nota2,nota3,nota4)
+console.log(resultado)
 
-let tipoProf = ''
 
-let validar = recebendoDados.registrarDados(nomeAluno,
-    nomeProf, 
-    sexoProf, 
-    sexoAluno,
-    nomeCurso, 
-    nomeDisci,
-    nota1,
-    nota2,
-    nota3, 
-    nota4
-)
 
-// if(sexoProf == 'feminino'){
-//     tipoProf = 'professora'
-// }else{
-//     tipoProf = 'professor'
-// }
 
-// return tipoProf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let nomeAluno = 'Sthefany'
+// let nomeProf = 'Marcel'
+// let sexoProf = 'Masculino'
+// let sexoAluno = 'Feminino'
+// let nomeCurso = 'Desenvolvimento de Sistemas'
+// let nomeDisci = 'Backend'
+
+// let nota1 = 4
+// let nota2 = 7
+// let nota3 = 8
+// let nota4 = 9
+
+// let tipoProf = ''
+
+// let validar = recebendoDados.registrarDados(nomeAluno,
+//     nomeProf, 
+//     sexoProf, 
+//     sexoAluno,
+//     nomeCurso, 
+//     nomeDisci,
+//     nota1,
+//     nota2,
+//     nota3, 
+//     nota4
+// )
+
+// // if(sexoProf == 'feminino'){
+// //     tipoProf = 'professora'
+// // }else{
+// //     tipoProf = 'professor'
+// // }
+
+// // return tipoProf
     
     
-console.log(validar)
+// console.log(validar)
