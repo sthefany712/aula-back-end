@@ -8,8 +8,8 @@ const valor = function(nota1, nota2, nota3,nota4){
     return media
 }
 
-const limitarValores = function (nota1,nota2,nota3,nota4){
-    let notas = valor(nota1,nota2,nota3,nota4)
+const limitarValores = function (notaUm,notaDois,notaTres,notaQuatro){
+    let notas = valor(notaUm,notaDois,notaTres,notaQuatro)
     if(notas <= 0 || notas >= 100){
         return 'ERRO'
 
@@ -18,11 +18,6 @@ const limitarValores = function (nota1,nota2,nota3,nota4){
 }
   
 
-
-    
-
-
-   
 
  module.exports = {
      valor, limitarValores

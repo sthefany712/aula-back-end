@@ -12,8 +12,11 @@ let nota2 = 8
 let nota3 = 9
 let nota4 = 6
 
-let resultado = recebendoValor.limitarValores(nota1,nota2,nota3,nota4)
+let resultado = (nota1,nota2,nota3,nota4)
 console.log(resultado)
+
+let validar = recebendoValor.limitarValores(nota1,nota2,nota3,nota4)
+console.log(validar)
 
 
 
