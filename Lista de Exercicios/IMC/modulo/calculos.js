@@ -1,5 +1,4 @@
 //Função ter um nome em verbo, e deixar claro o que está fazendo
-//Isso aqui função
 //Uma função precisa retornar algo
 const gerarImc = function(peso,altura){
     let peso1 = Number(peso)

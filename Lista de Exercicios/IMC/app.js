@@ -5,17 +5,29 @@
  * Versão:1.0
  * *********************************************************************************/ 
 
+const readline = require('readline')
+
+const entradaDeDados = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
 const calculoImc = require('./modulo/calculos.js')
-//Dados
-let peso1= 70
-let altura1= 1.60
 
-let resultadoImc = (peso1,altura1)
-console.log(resultadoImc)
+entradaDeDados.question('Digite o seu peso: ', function (peso) {
 
-let validar = calculoImc.condicionandoImc(peso1, altura1)
-console.log(validar)
+    entradaDeDados.question('Digite a sua altura: ', function (altura) {
 
+        let peso1= peso
+        let altura1= altura
+
+        let resultadoImc = (peso1,altura1)
+        console.log(resultadoImc)
+
+        let validar = calculoImc.condicionandoImc(peso1, altura1)
+        console.log(validar)
+    })
+})
 
 //calculandoImc.condicionandoImc
 // O ponto (.) serve para:

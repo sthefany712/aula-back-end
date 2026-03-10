@@ -11,10 +11,12 @@ const calculosMatematicos = require('./calcular.js')
 const gerarTabuada = function(tabuada){
     let tab = Number(tabuada)
 
+    //Cont é de contador
     let cont = 0
     let resultado
 
     //Repetição para gerar a tabuada até 10
+    //while == enquanto
     while(cont <= 10){
         //chama a função de multiplicar para realizar a operação
         resultado = calculosMatematicos.multiplicar(tab, cont)
@@ -24,6 +26,7 @@ const gerarTabuada = function(tabuada){
         //Exemplos de como incrementar o contador
         //cont = cont + 1
         //cont++
+        
         cont +=1
     }
 }
@@ -43,4 +46,5 @@ const gerarTabuadaFor = function(tabuada){
     }  
 }
 
-gerarTabuadaFor(9) //está chamando a função e número colocado no () é o valor escolhido
+gerarTabuada(6)
+//gerarTabuadaFor(9) //está chamando a função e número colocado no () é o valor escolhido

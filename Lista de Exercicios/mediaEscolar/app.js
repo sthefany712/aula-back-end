@@ -7,16 +7,16 @@
 
 const recebendoValor = require('./modulo/calculos.js')
 
-let nota1 = 5
-let nota2 = 8
-let nota3 = 9
-let nota4 = 6
-
-let resultado = (nota1,nota2,nota3,nota4)
-console.log(resultado)
+let nota1 = 0
+let nota2 = 0
+let nota3 = 0
+let nota4 = 0
 
 let validar = recebendoValor.limitarValores(nota1,nota2,nota3,nota4)
 console.log(validar)
+
+
+
 
 
 
