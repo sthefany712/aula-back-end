@@ -3,9 +3,7 @@
  * Data: 05/03/2026
  * Autor: Sthefany
  * Versão: 1.0
- 
- ****************************************************************************************/ 
-
+ *****************************************************************************************/
 /*
     [ ] -> representa um objeto do tipo ARRAY
     { } -> representa um objeto do tipo JSON
@@ -34,9 +32,19 @@
 */
 
 //Formas de criar um ARRAY 
-const listaDeNomes     =    ['José', 'Maria', 'João', 'André', 'Alex'] // posso já colocar o conteúdo OU
-const listaDeClientes  =    []                                         // Crio vazio e alimento ele conforme eu preciso
-                                                                       //JS permite guardar TIPOS diferecentes de dados dentro do msm ARRAY  
+const listaDeNomes     =    ['José', 
+                            'Maria', 
+                            'João', 
+                            'André', 
+                            'Alex', 
+                            'Carlos',
+                            'Ana', 
+                            'Bruna', 
+                            'Jake', 
+                            'José', 
+                            'José da Silva'] // posso já colocar o conteúdo OU
+const listaDeClientes  =    []               // Crio vazio e alimento ele conforme eu preciso
+                                             //JS permite guardar TIPOS diferentes de dados dentro do msm ARRAY  
 const listaDeFornecedores = []   
                                                 
 const exibirDados = function(){
@@ -99,8 +107,8 @@ const exibirDados = function(){
     //Praticamente igual ao FOR e WHILE
 
     console.log('********* FOR IN *********')
-    for(item in listaDeNomes){
-        console.log(`O nome do cliente é: ${listaDeNomes[item]}`)
+    for(cont in listaDeNomes){
+        console.log(`O nome do cliente é: ${listaDeNomes[cont]}`)
     }     
 
     //FOR OF
@@ -127,16 +135,95 @@ const manipularDados = function(){
 
     console.log(listaDeClientes)
 
-    //Permite adicionar novos valores no array, sempre no final da lista, 
+    // ***** PUSH *******
+    //Permite adicionar novos valores no array, sempre no FINAL da lista, 
     //sempre vai seguindo a ordem
     listaDeFornecedores.push('Luiz da Silva')
     listaDeFornecedores.push('Zezinho da Silva')
-    listaDeFornecedores.push('Joao da Silva')
+    listaDeFornecedores.push('Huguinho da Silva')
     listaDeFornecedores.push('Luizinho da Silva', 'André da Silva', 'Carlos da Silva')
 
-    console.log(listaDeFornecedores)
+    console.table(listaDeFornecedores)
+
+    //COMANDOS IMPORTANTES:
+
+    // ****** UNSHIFT *******
+    //Permite ADICIONAR novos elementos no array sempre no INICIO da lista
+    listaDeFornecedores.unshift('Ana Carolina')
+    console.table(listaDeFornecedores)
+
+    // ******** POP *******
+    //Permite REMOVER elementos do FINAL da lista
+    listaDeFornecedores.pop()
+    console.table(listaDeFornecedores)
+
+    // ****** SHIFT *******
+    //Permite REMOVER elementos do INICIO da lista
+    listaDeFornecedores.shift()
+    console.table(listaDeFornecedores)
+
+    // ****** SPLICE *******
+    //Permite REMOVER um elemento BASEADO NO INDICE da lista
+               // splice(indice, quantidade de elementos)
+    listaDeFornecedores.splice(2,1)
+    console.table(listaDeFornecedores)
 }
 
+const removerItem = function(nome){
+ 
+    //Retorna o indice de um elemento fazendo a busca pelo valor
+    //Quando encontra o elemento ele para, ex: se eu tenho 10 Marias ele apaga só
+    //a primeira que encontrar, já o FOR apaga todas.
+    //Se o indexof não o conteúdo ele devolve -1
+    let indice = listaDeNomes.indexOf(nome)
+    if(indice != -1){
+        listaDeNomes.splice(indice, 1)
+        return true
+    }else{
+        return false
+    }
+
+    //FOR IN, OF E O EACH NÃO PRECISO DECLARAR A VARIÁVEL
+    //FOR automaticamente percorre todos os elementos
+    // for(indice in listaDeNomes){
+    //     if(listaDeNomes[indice] == nome){
+    //         listaDeNomes.splice(indice,1)
+    //     }
+    // }
+}    
+
+const verificarItem = function(nome){
+    //Verifica a existência de um conteúdo dentro de uma lista (true/false)
+    return listaDeNomes.includes(nome) 
+   
+}
+
+//coloco o toUpperCase p/ que a o nome possa ser escrito tanto com letra maiuscula quanto minuscula
+//já que é o próprio sistema que vai colocar tudo como MAISCULA
+const quantidadeDeItens = function(nome){
+    let cont = 0
+    listaDeNomes.forEach(function(item){
+        if(String(item).toUpperCase() == String(nome).toUpperCase()) 
+            cont +=1
+    })
+
+    return cont
+}
 //Sempre chamar a função p/ funcionar
 //exibirDados()
-manipularDados()
+//manipularDados()
+//console.table(listaDeNomes)
+
+// let resposta = (removerItem('Kelly'))
+// if(resposta)
+//     console.log('Item removido com sucesso.')
+// else
+//     console.log('Não foram encontrados itens para ser removido.')
+// console.table(listaDeNomes)
+
+//console.log(verificarItem('Kelly')) //toda vez que a função tem return  precisa chama-la no console
+
+console.log(quantidadeDeItens('josé'))
+
+
+
