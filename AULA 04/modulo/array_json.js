@@ -31,7 +31,7 @@
                     }
 */
 
-//Formas de criar um ARRAY 
+//Formas de criar um ARRAY : P/ montar listas de dados
 const listaDeNomes     =    ['José', 
                             'Maria', 
                             'João', 
@@ -167,6 +167,13 @@ const manipularDados = function(){
                // splice(indice, quantidade de elementos)
     listaDeFornecedores.splice(2,1)
     console.table(listaDeFornecedores)
+
+     // ****** ESSE SPLICE PERMITE ADICIONAR UM ELEMENTO *******
+     //em determinado lugar do array (indice)
+                      //Indice, 0 -> significa que não será removido ninguém, Novo conteúdo.
+     listaDeFornecedores.splice(2,0, 'Carlos da Silva')
+     console.table(listaDeFornecedores)
+
 }
 
 const removerItem = function(nome){
@@ -209,6 +216,131 @@ const quantidadeDeItens = function(nome){
 
     return cont
 }
+
+                // ********* JSON **********
+                //Dados do mesmo seguimento. Um objt de dados, uma estruturas de dados. (atributos)
+//O atributo tem que ser SEMPRE MINUSCULO e com aspas DUPLAS
+//JSON Não tem indice, tem atributo
+const criandoDadosJSON = function(){
+    let aluno = {"nome": "José",
+                "ra": 123456,  //Não está em "" pois é um INTEIRO
+                "telefone": "975846824",
+                "email":"jose@gmail.com"
+                }
+    
+    //Exibindo o objeto JSON completo
+    console.log(aluno)     
+    console.table(aluno) //por não ter indice não é muito bom usar
+
+    //Exibindo apenas o ATRIBUTO do JSON
+    console.log(aluno.nome)
+    console.log(aluno.email)
+
+    //Adiciona um novo atributo no JSON
+    aluno.sexo = 'Masculino'
+    console.log(aluno)
+
+    //Remove um atributo no JSON
+    delete aluno.telefone
+    console.log(aluno)
+
+
+}
+
+//id e nome (atributo) minuscula
+//o objeto começa do 1 porque o bc não identifica 0
+const cadastroDeProdutos = function(){
+    let cores = [
+        {"id": 1, "cor":"Branco"}, //Indice 0 
+        {"id": 2, "cor":"Preto"},  //Indice 1
+        {"id": 3, "cor":"Azul"},   //Indice 2
+        {"id": 4, "cor":"Rosa"},   //Indice 3
+        {"id": 5, "cor":"Cinza"}   //Indice 4
+    ]
+
+    let marcas = [
+        {"id": 1, "marca": "LG",        "telefone": "1234569", "email":"lg@.com.br"}, //começo contar do 0 por ser array
+        {"id": 2, "marca": "Dell",      "telefone": "1562569", "email":"dell@.com.br"},
+        {"id": 3, "marca": "Lenovo",    "telefone": "1323437", "email":"lenovo@.com.br"},
+        {"id": 4, "marca": "Apple",     "telefone": "11934569","email":"apple@.com.br"},
+        {"id": 5, "marca": "Rayzer",    "telefone": "3934569", "email":"rayzer@.com.br"},
+        {"id": 6, "marca": "Logitech",  "telefone": "8734569", "email":"log@.com.br"},
+        {"id": 7, "marca": "Multilaser", "telefone":"36634569","email":"multi@.com.br"}
+    ]
+
+    let produtos =  [
+        {   "id": 1,
+            "nome": "Monitor", //idex 0
+            "descricao": "27 polegadas",
+            "marca": [
+                        marcas[1].marca
+            ],
+            "qtde": 20,
+            "cor": [
+                cores[4],
+                cores[1]
+            ],
+            "valor": 800.50
+        },
+        {   "id": 2,
+            "nome": "Teclado",
+            "descricao": [
+                            marcas[5].marca
+            ],
+            "qtde": 200,
+            "cor": cores,
+            "valor": 150.00
+        },
+        {   "id": 3,
+            "nome": "Mouse sem fio",
+            "descricao": [
+                            marcas[0].marca,
+                            marcas[1].marca,
+                            marcas[5].marca,
+                        ],
+            "qtde": 500,
+            "cor": [cores[0],
+                    cores[1],
+                    cores[4],
+                    cores[5]
+                ],
+                
+            "valor": 150.00
+        }
+    ]
+    //console.log(produtos)
+    //console.table(produtos)
+    produtos[0],[1].forEach(function(nomeProduto){
+         console.log('O cor do produto é: ' + nomeProduto)
+        })
+
+    //console.log(produtos)
+    //console.log(produtos[0].cor)
+    //console.log(produtos[0].cor[1].cor)
+
+    //console.table(produtos) //coloquei só p/ visualizar melhor
+
+    //Usando forEach p/ repetir (looping)
+    // produtos[0].cor.forEach(function(nomeCor){
+    //     console.log('A cor do produto é: ' + nomeCor.cor)
+    // })
+
+
+
+
+
+    //console.log(cores)
+    //console.table(cores) //Array começa do 0 mas os atributos começa do 1
+
+    //console.log(cores[2].nome) //printa só a cor, se eu quiser esse print: { id: 3, nome: 'Azul' }
+    //só tirar o .nome
+    //precisa dar o caminho EXATO do que você quer, para que o a leitura seja exata.
+
+    //ARRAY TRATO COMO ÍNDICE
+    //JSON trato como ponto (.)
+    //(cores[2].nome) - [2] INDEX do ARRAY    .nome : JSON
+}
+
 //Sempre chamar a função p/ funcionar
 //exibirDados()
 //manipularDados()
@@ -223,7 +355,11 @@ const quantidadeDeItens = function(nome){
 
 //console.log(verificarItem('Kelly')) //toda vez que a função tem return  precisa chama-la no console
 
-console.log(quantidadeDeItens('josé'))
+//console.log(quantidadeDeItens('josé'))
+
+//manipularDados()
+//criandoDadosJSON()
+cadastroDeProdutos()
 
 
 
