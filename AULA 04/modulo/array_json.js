@@ -250,7 +250,7 @@ const criandoDadosJSON = function(){
 //id e nome (atributo) minuscula
 //o objeto começa do 1 porque o bc não identifica 0
 const cadastroDeProdutos = function(){
-    let cores = [
+    let cores = [                                       //Objeto cores
         {"id": 1, "cor":"Branco"}, //Indice 0 
         {"id": 2, "cor":"Preto"},  //Indice 1
         {"id": 3, "cor":"Azul"},   //Indice 2
@@ -258,7 +258,7 @@ const cadastroDeProdutos = function(){
         {"id": 5, "cor":"Cinza"}   //Indice 4
     ]
 
-    let marcas = [
+    let marcas = [                                     //Objeto marcas
         {"id": 1, "marca": "LG",        "telefone": "1234569", "email":"lg@.com.br"}, //começo contar do 0 por ser array
         {"id": 2, "marca": "Dell",      "telefone": "1562569", "email":"dell@.com.br"},
         {"id": 3, "marca": "Lenovo",    "telefone": "1323437", "email":"lenovo@.com.br"},
@@ -268,8 +268,8 @@ const cadastroDeProdutos = function(){
         {"id": 7, "marca": "Multilaser", "telefone":"36634569","email":"multi@.com.br"}
     ]
 
-    let produtos =  [
-        {   "id": 1,
+    let produtos =  [                                 //Objeto produtos
+        {   "id": 1, //é só um atributo, posso colocar qualquer coisa, pois meu parametro é o INDEX. Estamos usando o id em número p/ já se acostumar com o BC de dados
             "nome": "Monitor", //idex 0
             "descricao": "27 polegadas",
             "marca": [
@@ -284,16 +284,18 @@ const cadastroDeProdutos = function(){
         },
         {   "id": 2,
             "nome": "Teclado",
-            "descricao": [
+            "descricao": "teclado sem fio", 
+            "marca": [
                             marcas[5].marca
             ],
             "qtde": 200,
-            "cor": cores,
+            "cor":cores, //trás todas as cores guardadas dentro do atributo marcas
             "valor": 150.00
         },
         {   "id": 3,
             "nome": "Mouse sem fio",
-            "descricao": [
+            "descricao": "sem fio",
+            "marca": [
                             marcas[0].marca,
                             marcas[1].marca,
                             marcas[5].marca,
@@ -301,18 +303,60 @@ const cadastroDeProdutos = function(){
             "qtde": 500,
             "cor": [cores[0],
                     cores[1],
-                    cores[4],
-                    cores[5]
+                    cores[4]
                 ],
-                
+         
             "valor": 150.00
         }
     ]
-    //console.log(produtos)
+    console.log(produtos)
     //console.table(produtos)
-    produtos[0],[1].forEach(function(nomeProduto){
-         console.log('O cor do produto é: ' + nomeProduto)
+
+    //Repetição o objeto de produto para trazer os resultados de cada produto
+
+    produtos.forEach(function(itemProduto){ //percorre o array e devolve produto p/ n ficar igual coloquei itemProduto
+        console.log(`Produto: ${itemProduto.nome}`) //precisa colocar .nome ou .descrição dependendo do q eu quero, pois se eu deixo vazio dele resulta
+
+        //Percorre o objeto de marca dentro de cada produto, para trazer as marcas.
+         itemProduto.marca.forEach(function(itemMarca){ //
+             console.log(`    Marca: ${itemMarca}`)
+         })
+
+         //Percorre o objeto de cor dentro de cada produto para trazer as cores
+        itemProduto.cor.forEach(function(itemCor){
+            console.log(itemCor.cor)
         })
+    })
+
+    //Pesquisando um produto pelo NOME
+    //O ideal seria fazer uma função, mas p/ não confundir vamos fazer dentro dessa
+
+    console.log('Pesquisando Produtos pelo NOME')
+    let nome = 'teclado'
+
+    produtos.forEach(function(itemProduto){
+        if(String(itemProduto.nome).toUpperCase() == String(nome).toUpperCase())
+            console.log(itemProduto)
+    })
+
+    //Pesquisando um Produto pela COR
+    console.log('Pesquisando pela COR')
+        let cor = 'azul'
+        let status = false //variável booleana
+
+                                  //CALLBACK do forEchach (é uma função passada como argumento para outra função, que é executada após a conclusão de uma tarefa ou evento específico)
+        produtos.forEach(function(itemProduto){
+            itemProduto.cor.forEach(function(itemCor){
+                if(String(itemCor.cor).toUpperCase() == String(cor).toUpperCase()){ //Por ser Array preciso percorrer, então não faço if direto, pois não é um atributo simples.
+                    console.log(itemProduto)
+                    status = true
+                }
+            }) 
+        })
+
+
+        if(!status) //invertendo o true para false (!)
+            console.log('Item pesquisado não foi encontrado...')
 
     //console.log(produtos)
     //console.log(produtos[0].cor)
@@ -324,10 +368,6 @@ const cadastroDeProdutos = function(){
     // produtos[0].cor.forEach(function(nomeCor){
     //     console.log('A cor do produto é: ' + nomeCor.cor)
     // })
-
-
-
-
 
     //console.log(cores)
     //console.table(cores) //Array começa do 0 mas os atributos começa do 1
