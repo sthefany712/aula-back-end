@@ -15,8 +15,7 @@ const gerarImc = function(peso,altura){
 //Na grande maioria das vezes uma função vai precisar receber um parâmetro/argumento
 //Isso porque a função precisa receber os dados externos para dentro dela, para processar e retornar algo
 // ampliando assim o seu potencial de uso
-//Entretando, em certos casos elas podem não precisar, isso acontece em procedimentos que
-//executam os mesmos passos toda vez que são chamados.
+//Entretando, em certos casos elas podem não precisar, isso acontece em procedimentos que executam os mesmos passos toda vez que são chamados.
 // (ex: limparTela(), tocarCampainha()).
 
     const condicionandoImc = function(peso1,altura1){
@@ -36,9 +35,9 @@ const gerarImc = function(peso,altura){
         }    
         
         //Anotções importantes:
-        //Esse VALOR é uma variável da segunda função: condicionandoImc 
+        //Esse VALOR é uma variável da segunda função: condicionandoImc, que está recebendo o resultado da primeira função: gerarImc, que é o resultado do cálculo do IMC.
 
-        //if (se...)
+        //if (se...) 
         // else if (senão, se...)
         // else (senão...)
     }
@@ -46,7 +45,5 @@ const gerarImc = function(peso,altura){
 
 module.exports = {
     gerarImc, condicionandoImc,
-    
-
    }
 

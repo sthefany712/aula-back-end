@@ -21,9 +21,6 @@ entradaDeDados.question('Digite o seu peso: ', function (peso) {
         let peso1= peso
         let altura1= altura
 
-        let resultadoImc = (peso1,altura1)
-        console.log(resultadoImc)
-
         let validar = calculoImc.condicionandoImc(peso1, altura1)
         console.log(validar)
     })

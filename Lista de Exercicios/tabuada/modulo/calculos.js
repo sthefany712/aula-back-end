@@ -8,11 +8,14 @@
 const obterTabuadas = function (tabuadaInicial, tabuadaFinal, numeroInicial,numeroFinal) {
     //Estrutura de reptição
 
+    //Tabuada inicial
     let contadorTabuadas = tabuadaInicial
     while (contadorTabuadas <= tabuadaFinal) {
         console.log(`Tabuada do [${contadorTabuadas}]`)
 
         //Criei um while dentro do outro
+
+        //Contador da tabuada
         let tabuada = numeroInicial
         while (tabuada <= numeroFinal) {
             let resultado = contadorTabuadas * tabuada
