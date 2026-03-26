@@ -5,6 +5,7 @@
  * Versão:1.0
  * *********************************************************************************/ 
 
+const { log } = require('console')
 const readline = require('readline')
 
 const entradaDeDados = readline.createInterface({
@@ -15,8 +16,9 @@ const entradaDeDados = readline.createInterface({
 // const recebendoValor = require('./modulo/calculos.js')
 // const { log } = require('console')
 
+
 entradaDeDados.question('Nome do aluno: ', (aluno) => {
-    nomeAluno = aluno
+    nomeAluno = aluno 
 
     if(nomeAluno == ''){
         console.log('ERRO!! Preencha todos os dados !!!')
@@ -38,14 +40,16 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                 console.log('ERRO!! Preencha todos os dados !!!')
                 return
             }
-
+           
             //Validando o sexo do prof
+            let sProf = ''
+            
             if(sexoPro == 'feminino'){
-                console.log('Professora')
+                sProf = 'Professora'
             }else{
-                console.log('Professor');
+                sProf = 'Professor'
             }
-
+            
             entradaDeDados.question('Sexo do aluno: ', (sexoAluno) => {
                 sexoDoaluno = sexoAluno
 
@@ -54,15 +58,21 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                     return
                 }
 
+                let sAluno = ''
+                let letraAluno = ''
+                let d = ''
                 if(sexoAluno == 'feminino'){
-                    console.log('aluna');
+                    sAluno = '  A aluna'
+                    letraAluno = 'A'
+                    d = 'da'
                 }else{
-                    console.log('aluno');
-                    
+                    sAluno = 'O aluno'
+                    letraAluno = 'O'
+                    d = 'do'
                 }
                 
                 entradaDeDados.question('Nome do curso: ', (curso) => {
-                    nomeCurso = curso
+                    let nomeCurso = curso
 
                     if(nomeCurso == ''){
                         console.log('ERRO!! Preencha todos os dados !!!')
@@ -70,7 +80,7 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                     }
 
                     entradaDeDados.question('Nome da disciplina: ', (disci) => {
-                        nomeDisci = disci 
+                       let  nomeDisci = disci 
 
                         if(nomeDisci == ''){
                             console.log('ERRO!! Preencha todos os dados !!!')
@@ -79,9 +89,9 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                         
                         //Entrada das notas, mais validações delas.
                         entradaDeDados.question('Digite a PRIMEIRA nota: ', (notaUm) => {
-                            nota1 = Number(notaUm) 
+                            let nota1 = (notaUm) 
                             
-                            if(nota1 == 0){
+                            if(nota1 == ''){
                                 console.log('ERRO!! Preencha todos os dados !!!')
                                 return
                             }
@@ -92,9 +102,9 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                             }
 
                             entradaDeDados.question('Digite a SEGUNDA nota: ', (notaDois) => {
-                                nota2 = Number(notaDois)
+                                let nota2 = (notaDois)
 
-                                if (nota2 == 0){ //coloquei 0 aos invés de '' pois eu transformei a string em number
+                                if (nota2 == ''){ 
                                     console.log('ERRO! Os valores devem estar entre 0 e 100')
                                     return
                                 }
@@ -105,9 +115,9 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                                 }
 
                                 entradaDeDados.question('Digite a TERCEIRA nota: ', (notaTres) => {
-                                    nota3 = Number(notaTres)
+                                    let nota3 = (notaTres)
 
-                                    if(nota3 == 0){
+                                    if(nota3 == ''){
                                         console.log('ERRO! Os valores devem estar entre 0 e 100')
                                         return
                                     }
@@ -118,9 +128,9 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                                     }
 
                                     entradaDeDados.question('Digite a QUARTA nota: ', (notaQua) => {
-                                        nota4 = Number(notaQua)
+                                        let nota4 =(notaQua)
 
-                                        if(nota4 == 0){
+                                        if(nota4 == ''){
                                              console.log('ERRO! Os valores devem estar entre 0 e 100')
                                              return
                                         }
@@ -128,33 +138,46 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
                                         if(nota4 < 0 || nota4 > 100){
                                             console.log('ERRO! Os valores devem estar entre 0 e 100')    
                                         }
+                                        console.log('')
 
-                                        
                                         //Calculando a média 
                                         let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4
-
-                                        console.log('A média é: ', media);
-
+                                        
                                         //Validando média e exame, para aprovação ou reprovação do aluno
+                                        
+                                        let aprovaçãoNotas = ''
+
                                         if(media > 70){
-                                            console.log('APROVADO')
-                                           return
+                                            aprovaçãoNotas = 'APROVADO'
                                         }
+                
                                         if(media < 50){
-                                            console.log('REPROVADO')
-                                            return
+                                            aprovaçãoNotas = 'REPROVADO'    
                                         }
-                                        if(media > 50 || media < 69 ){
+
+                                        let valorExame = Number()
+
+                                        if(media > 50 && media < 69 ){
                                             entradaDeDados.question('Digite a nota que você obteve no EXAME: ', (exame) => {
-                                                let valorExame = Number(exame)
+                                                valorExame = Number(exame)
 
                                                 if (valorExame > 60 && media > 60){
                                                      console.log('Aprovado no exame!')
                                                 }else{
                                                     console.log('Reprovado no exame!')
-                                                }
+                                                } 
                                             })        
                                         } 
+     
+                                        console.log('Relatório do aluno: ')
+                                        console.log('');
+                                        console.log(`${d} ${nomeAluno} foi ${aprovaçãoNotas} na disciplina ${nomeDisci}.`);
+                                        console.log(`Curso: ${nomeCurso}`);
+                                        console.log(`${sProf}: ${nomeProf}`);
+                                        console.log(`Notas ${letraAluno} ${sAluno}: ${nota1}, ${nota2}, ${nota3}, ${nota4}, ${valorExame}`);
+                                        console.log(`Média Final: ${media}`);
+                                        console.log(` Média Final do Exame: ${valorExame}`);
+                                    
                                      })
                                  }) 
                             })
@@ -165,4 +188,4 @@ entradaDeDados.question('Nome do aluno: ', (aluno) => {
         })
     })
 })
-      
+   

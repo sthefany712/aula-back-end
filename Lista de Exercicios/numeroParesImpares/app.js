@@ -31,6 +31,24 @@ entradaDeDados.question('Número inicial: ', (numeroInicial) => {
             return
         }
         
+        console.log('');
+        
+        console.log('Escolha [1] para calcular somente os números pares')
+        console.log('Escolha [2] para calcular somente os números impares')
+        console.log('Escolha [3] para calcular ambos')
+        console.log('')
+
+        entradaDeDados.question('Escolha [1] para par: ', (escolha) => {
+            let escolher = Number(escolha)
+
+            switch(escolher){
+                case 1: 
+                console.log('URUUUL');
+                
+            }
+        })
+
+
         console.log('Lista de números Pares')
 
         let quantidade = 0

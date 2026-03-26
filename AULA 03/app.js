@@ -45,6 +45,8 @@ entradaDeDados.question('Digite o nome do Cliente:', function (nome) { // abre n
                    // let percentual = Number(taxaCompra) / 100
                    // let montante = Number(capitalProduto) * ((1 + Number(percentual)) ** Number(tempoPagamento))
                    let montate = calculos.calcularJurosCompostos(capitalProduto, taxaCompra, tempoPagamento)
+
+                   let teste = calculos.calcularPercentual(1)
               
                     if(montate){
                         console.log('O montante final é:'+ montate.toFixed(2)) 
