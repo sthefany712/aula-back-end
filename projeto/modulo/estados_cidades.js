@@ -22499,8 +22499,8 @@ var listaDeEstados = {
         }
     ]
 }
-//console.log(listaDeEstados)
 
+//console.log(listaDeEstados)
 module.exports = {
    listaDeEstados
 }
