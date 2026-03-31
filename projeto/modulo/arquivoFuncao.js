@@ -70,16 +70,17 @@ function getCapitalEstado(capitalS) {
     return capitalUf
 }
 
-getEstadosRegiao('Norte')
+getEstadosRegiao('SuL')
 function getEstadosRegiao(regiao) {
-
+    regiao = regiao.toUpperCase()
     let infRegiao = {
         regiao: '',
         estados: [],
     }
 
     estadosCidades.listaDeEstados.estados.forEach(regiaoEstado =>{
-       
+       regiaoEstado.regiao = regiaoEstado.regiao.toUpperCase()
+
         if(regiao == regiaoEstado.regiao){
             infRegiao.regiao = regiaoEstado.regiao
             
@@ -88,9 +89,57 @@ function getEstadosRegiao(regiao) {
                 descricao: regiaoEstado.nome
             }
             infRegiao.estados.push(estado) 
-            
         }
     })
-    console.log(infRegiao)
+   return infRegiao 
+}
 
+getCapitalPais()
+function getCapitalPais(){
+
+    let capitalBrasil = {
+        capitais: [], 
+    }
+ 
+    estadosCidades.listaDeEstados.estados.forEach(capital => {
+        if(capital.capital_pais){
+            let informaçõesCapital = {
+                capital_atual: capital.capital_pais.capital,
+                uf: capital.sigla,
+                descricao: capital.nome,
+                regiao: capital.regiao,
+                capital_pais_ano_inicio: capital.capital_pais.ano_inicio,
+                capital_pais_ano_terminio: capital.capital_pais.ano_fim
+            }
+
+            capitalBrasil.capitais.push(informaçõesCapital)
+        }  
+    })
+      return capitalBrasil
+}
+
+getCidades('mg')
+function getCidades(filtroEstado){
+    filtroEstado = filtroEstado.toUpperCase()
+
+    let infoCidades = {
+        uf: '',
+        descricao: '',
+        quantidade_cidades: 0,
+        cidades: []
+    }
+
+    estadosCidades.listaDeEstados.estados.forEach(estado => {
+
+        if(filtroEstado == estado.sigla.toUpperCase()){
+            infoCidades.uf = estado.sigla
+            infoCidades.descricao = estado.nome
+           
+            estado.cidades.forEach(cidade => {      //forEach pois é um array 
+                infoCidades.cidades.push(cidade.nome)
+                infoCidades.quantidade_cidades = infoCidades.quantidade_cidades + 1
+            });
+        }
+    })
+       return infoCidades 
 }
