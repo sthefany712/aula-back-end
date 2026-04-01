@@ -8,18 +8,17 @@ estados do Brasil.
  **********************************************************************************
  */
 
-let estadosCidades = require('./estados_cidades.js') //arquivo
+const estadosCidades = require('./estados_cidades.js') //arquivo
 
-getListaDeEstados(estadosCidades.listaDeEstados) //arquivo e variável do arquivo como parâmetro
-
-function getListaDeEstados(listaDeEstados) {
+getListaDeEstados() 
+function getListaDeEstados() {
 
     let siglaQuantidade = {
         uf: [],
         quantidade: 0
     }
   
-    listaDeEstados.estados.forEach(estado => {
+    estadosCidades.listaDeEstados.estados.forEach(estado => {
          siglaQuantidade.uf.push(estado.sigla) //push pois tenho array
          siglaQuantidade.quantidade = siglaQuantidade.quantidade + 1 //para contar a quantidade de siglas
     })
@@ -146,6 +145,7 @@ function getCidades(filtroEstado){
 
 module.exports = {
     getListaDeEstados,
+    getDadosEstado,
     getCapitalEstado,
     getEstadosRegiao,
     getCapitalPais,
