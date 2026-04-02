@@ -49,17 +49,11 @@ const estadosCidades = require('./modulo/arquivoFuncao.js')
 //Request -> São chegadas de dados da API (Sempre que API precisar RECEBER) (res)
 //sempre que o back fizer um response ele vai montar json e status_code. 
 //Precisa mandar 2 response, um com json e outro com status_code (é um código que representa oq está acontecendo c/ a minha API,
+//Nao pode inverter os argumentos req e res
 
 //Criando EndPoint para a API
-app.get('/v1/senai/estados', function(request, response){
 
-    //Chama a função que retorna a lista de estados
-    let estados = estadosCidades.getListaDeEstados()
-
-    response.json(estados)
-    response.status(200)
-})
-
+//Retorna dados dos estados filtrando pelo uf
 app.get('/v1/senai/dados/estado/:uf', function(request, response){ 
     // /:uf é a minha variável que estou criando na minha url, os : são OBRIGATÓRIOS
     // http://localhost:8080///v1/senai/dados/estado/sp - como coloco na pesquisa
@@ -68,25 +62,136 @@ app.get('/v1/senai/dados/estado/:uf', function(request, response){
     let sigla = request.params.uf
     let estado = estadosCidades.getDadosEstado(sigla)
 
-    response.json(estado)
-    response.status(200)
+    if(estado){
+        response.json(estado)
+        response.status(200)
+    }else{
+        response.status(404)
+        response.json({"message": "O estado informado não foi encontrado"})
+        
+    }
+
+    // response.json(estado)
+    // response.status(200)
     
     //.status(): É o "humor" da resposta (sucesso, erro, alerta).
     //.json(): É o "conteúdo" da resposta (o presente dentro da caixa).
 })
 
-app.get('/cidades', function(request, response){   
+//Retorna dados da capital de cada estado filtrando pelo uf
+app.get('/v1/senai/capital/estado/:uf', function(request, response){
 
-    //coloco cidades na barra de pesquisa e não a variável
-    // let sigla = estadosCidades.getDadosEstado('mg')
+    let capitalS = request.params.uf
+    let estado = estadosCidades.getCapitalEstado(capitalS)
 
-    response.json({"message": "Testando minha API de Cidades"})
+    if(estado){
+        response.status(200)
+        response.json(estado)
+    }else{
+        response.json({"message": "O estado informado não foi encontrado"})
+        response.status(404)
+    }
+})
+
+//Retorna dados dos estados que forma capitais do Brasil
+app.get('/v1/senai/estados/capital/brasil', function(request, response){
+
+    let estado = estadosCidades.getCapitalPais()
+        response.status(200) 
+        response.json(estado)    
+})
+
+//Retorna dados dos estados filtrando pela região
+app.get('/v1/senai/estados/regiao/:regiao', function(request, response){
+
+    let regiao = request.params.regiao
+    let estado = estadosCidades.getEstadosRegiao(regiao)
+    
+    if(estado){
+        response.status(200)
+        response.json(estado)
+    }else{
+        response.status(404)
+        response.json({"message": "O estado informado não foi encontrado"})
+       
+    }
+})
+
+//Retorna dados dos estados filtrando pelo uf
+app.get('/v1/senai/cidades/estados/:uf', function(request, response){   
+
+    let cidades = request.params.uf
+    let estado = estadosCidades.getCidades(cidades)
+    
+    if(estado){
+        response.status(200)
+        response.json(estado)
+    }else{
+        response.status(404)
+        response.json({"message": "O estado informado não foi encontrado"})
+        }
+})
+
+//Retorna os estados
+app.get('/v1/senai/estados', function(request, response){
+
+    //Chama a função que retorna a lista de estados
+    let estados = estadosCidades.getListaDeEstados()
+
     response.status(200)
+    response.json(estados)
+    
+}) //coloco por ultimo para que os demais enPoints sejam validados primeiro, já que tem outros que possuem o inicio parecido
+
+
+app.get('/v1/senai/help', function(request, response){
+    let docAPI = {
+        "API-description": "API para manipular dados de Estados e Cidades",
+        "date": "2026-04-02",
+        "Development": "Sthefany",
+        "Version": "1.0",
+        "Endpoints": [
+            {
+                "id": 1,
+                "Rota 1": "/v1/senai/estados",
+                "Obs": "Retorna a lista de todos os estados"
+            },
+            {
+                "id": 2,
+                "Rota 1": "/v1/senai/dados/estado/sp",
+                "Obs": "Retorna os dados do estado filtrando pela sigla do estado",
+            },
+            {
+                "id": 3,
+                "Rota 1": "/v1/senai/capital/estado/sp",
+                "Obs": "Retorna os dados da capital filtrando pela sigla do estado",
+            },
+            {
+                "id": 4,
+                "Rota 1": "v1/senai/estados/capital/brasil",
+                "Obs": "Retorna todos os estados que formaram a capital do Brasil",
+            },
+            {
+                "id": 5,
+                "Rota 1": "/v1/senai/estados/regiao/sul",
+                "Obs": "Retorna todos os estados referente a uma regiao ",
+            },
+            {
+                "id": 6,
+                "Rota 1": "/v1/senai/cidades/estados/:uf",
+                "Obs": "Retorna todos as cidades filtrando pela sigla do estado ",
+            }        
+        ]
+    }
+
+    response.status(200)
+    response.json(docAPI)
 })
 
 //Serve para inicializar a API para receber requisições (geralmente colocamos no final do código)
 app.listen(8080, function(){
     console.log('API funcionando e aguardando novas requisições ...')
 }) 
+
 //Não ficar abrindo terminais, se mexer em algo, dar ctr C e rodar novamente !!!!!
 //Cada endPoint (url) retorna um Json

@@ -29,6 +29,7 @@ getDadosEstado('sp')
 function getDadosEstado(estadoSigla) {
     estadoSigla = estadoSigla.toUpperCase()
 
+    let status = false
     let siglaDadoEstado = {
         uf: '',
         descricao: '',
@@ -43,10 +44,14 @@ function getDadosEstado(estadoSigla) {
             siglaDadoEstado.descricao = dados.nome
             siglaDadoEstado.capital = dados.capital
             siglaDadoEstado.regiao = dados.regiao
+            status = true
         }
     })
 
-    return siglaDadoEstado
+    if(status)
+        return siglaDadoEstado
+    else
+        return false
 }
 
 getCapitalEstado('mt')
@@ -54,6 +59,7 @@ getCapitalEstado('mt')
 function getCapitalEstado(capitalS) {
     capitalS = capitalS.toUpperCase()
 
+    let status = false
     let capitalUf = {
         uf: '', descricao: '', capital: ''  
     }
@@ -64,21 +70,28 @@ function getCapitalEstado(capitalS) {
             capitalUf.uf = capital.sigla
             capitalUf.descricao = capital.nome
             capitalUf.capital = capital.capital
+            status = true
         }
+
     })
-    return capitalUf
+    if(status)
+        return capitalUf
+    else
+        return false
 }
 
 getEstadosRegiao('SuL')
-function getEstadosRegiao(regiao) {
-    regiao = regiao.toUpperCase()
+function getEstadosRegiao(nome) {
+    regiao = nome.toUpperCase()
+
+    let status = false
     let infRegiao = {
         regiao: '',
         estados: [],
     }
 
     estadosCidades.listaDeEstados.estados.forEach(regiaoEstado =>{
-       regiaoEstado.regiao = regiaoEstado.regiao.toUpperCase()
+        regiaoEstado.regiao = regiaoEstado.regiao.toUpperCase()
 
         if(regiao == regiaoEstado.regiao){
             infRegiao.regiao = regiaoEstado.regiao
@@ -88,14 +101,18 @@ function getEstadosRegiao(regiao) {
                 descricao: regiaoEstado.nome
             }
             infRegiao.estados.push(estado) 
+            status = true
         }
     })
-   return infRegiao 
+    if(status)
+        return infRegiao 
+    else
+        return false
 }
 
 getCapitalPais()
 function getCapitalPais(){
-
+   
     let capitalBrasil = {
         capitais: [], 
     }
@@ -110,17 +127,18 @@ function getCapitalPais(){
                 capital_pais_ano_inicio: capital.capital_pais.ano_inicio,
                 capital_pais_ano_terminio: capital.capital_pais.ano_fim
             }
-
             capitalBrasil.capitais.push(informaçõesCapital)
         }  
     })
-      return capitalBrasil
+    
+    return capitalBrasil //precisa ficar fora do ForEach
 }
 
 getCidades('mg')
 function getCidades(filtroEstado){
     filtroEstado = filtroEstado.toUpperCase()
 
+    let status = false
     let infoCidades = {
         uf: '',
         descricao: '',
@@ -129,18 +147,24 @@ function getCidades(filtroEstado){
     }
 
     estadosCidades.listaDeEstados.estados.forEach(estado => {
-
+       
         if(filtroEstado == estado.sigla.toUpperCase()){
             infoCidades.uf = estado.sigla
             infoCidades.descricao = estado.nome
            
+           
             estado.cidades.forEach(cidade => {      //forEach pois é um array 
                 infoCidades.cidades.push(cidade.nome)
                 infoCidades.quantidade_cidades = infoCidades.quantidade_cidades + 1
+                
             });
+            status = true
         }
+        
     })
-       return infoCidades 
+    if(status)
+        return infoCidades
+    else false  
 }
 
 module.exports = {
