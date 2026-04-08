@@ -54,12 +54,21 @@ const estadosCidades = require('./modulo/arquivoFuncao.js')
 //Criando EndPoint para a API
 
 //Retorna dados dos estados filtrando pelo uf
-app.get('/v1/senai/dados/estado/:uf', function(request, response){ 
+app.get('/v1/senai/dados/estado/', function(request, response){ 
     // /:uf é a minha variável que estou criando na minha url, os : são OBRIGATÓRIOS
     // http://localhost:8080///v1/senai/dados/estado/sp - como coloco na pesquisa
     // console.log(request.params.uf)
 
-    let sigla = request.params.uf
+    //Recebe a variavel UF através da URL separao pela / 
+    //'/v1/senai/dados/estado/uf'
+    // let sigla = request.params.uf
+
+    //let sigla = request.params.uf // você coloca apenas query e a variável que vai usar
+
+
+     //Recebe a variavel UF via Query Params, que são variáveis 
+        //após o símbolo de ?
+    let sigla = request.query.uf
     let estado = estadosCidades.getDadosEstado(sigla)
 
     if(estado){
