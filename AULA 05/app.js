@@ -97,8 +97,9 @@ app.get('/v1/senai/capital/estado/:uf', function(request, response){
         response.status(200)
         response.json(estado)
     }else{
-        response.json({"message": "O estado informado não foi encontrado"})
         response.status(404)
+        response.json({"message": "O estado informado não foi encontrado"})
+       
     }
 })
 
@@ -187,7 +188,7 @@ app.get('/v1/senai/help', function(request, response){
             },
             {
                 "id": 6,
-                "Rota 1": "/v1/senai/cidades/estados/:uf",
+                "Rota 1": "/v1/senai/cidades/estados/rj",
                 "Obs": "Retorna todos as cidades filtrando pela sigla do estado ",
             }        
         ]
