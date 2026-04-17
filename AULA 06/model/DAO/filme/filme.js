@@ -72,7 +72,6 @@ const insertFilme = async function(filme) {
         return false
 
         //A controller é quem trata esse true ou false, retornando alguma numeração que sign alguma resposta
-
         
 }
 
