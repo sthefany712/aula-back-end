@@ -38,7 +38,14 @@ values (
 			'3',
 			'50.70',
 			'https://br.web.img3.acsta.net/c_310_420/img/5b/ea/5bea1aeac3323aeaaf82449a34fafbbf.jpg'
-       );					
+       );			
+
+alter table tbl_filme
+	change column avalicao avaliacao decimal(3,2) default null;
+
+
+
+
 								#2 Regras sobre values:
 			#colocar na mesma ordem dos atributos. Para evitar erros seguir a ordem da criação da tbl
 			#todos os values deve ser colado entre ''(simples) menos do tipo INT

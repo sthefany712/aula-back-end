@@ -20,10 +20,10 @@ const ERROR_BAD_REQUEST = {status: false, status_code: 400, message: 'Os dados e
 
 
 //Mensagens de Sucesso da API
-const SUCESS_CREATED_ITEM = {status: true, status_code: 201, message: 'Registro inserido com sucesso!'}
+const SUCCESS_CREATED_ITEM = {status: true, status_code: 201, message: 'Registro inserido com sucesso!'}
 
 module.exports = {
     DEFAULT_MESSAGE,
     ERROR_BAD_REQUEST,
-    SUCESS_CREATED_ITEM
+    SUCCESS_CREATED_ITEM
 }

@@ -21,7 +21,7 @@
 
 //                                              Basicamente ctrl c ctrl v
 
- //Import da biblioteca para gereciar o bando de dados Mysql no node.JS
+ //Import da biblioteca para gereciar o banco de dados Mysql no node.JS
 const knex = require('knex')
 
 //Import do arquivo de configuração para conexão com o BD Mysql
@@ -31,7 +31,7 @@ const knexConfig = require('../../database_config_knex/knexFile.js') // ../para 
 const knexConex = knex(knexConfig.development)
 
 
- //                                                Funções do CRUD para a tabela filme (a base p/ criar qualquer tabela)
+ //Funções do CRUD para a tabela filme (a base p/ criar qualquer tabela)
 
 //Função para inserir dados na tabela de filme
 const insertFilme = async function(filme) { 
