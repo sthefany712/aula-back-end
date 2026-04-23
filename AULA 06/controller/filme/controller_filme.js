@@ -23,7 +23,7 @@ const inserirNovoFilme = async function (filme,contentType) {
 
     let message = JSON.parse(JSON.stringify(config_message))
     
-    // try {
+    try {
 
         if (String(contentType).toLocaleUpperCase() == 'APPLICATION/JSON') {
 
@@ -49,9 +49,9 @@ const inserirNovoFilme = async function (filme,contentType) {
             return message.ERROR_CONTENT_TYPE
         }
 
-    // } catch (error) {
-    //     return message.ERROR_INTERNAL_SERVER_CONTROLLER// ERRO 500 controller
-    // }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER// ERRO 500 controller
+    }
 }
 
 
