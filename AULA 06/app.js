@@ -48,3 +48,15 @@ app.post('/v1/senai/locadora/filme', bodyParserJSON, async function (request, re
 app.listen(8080, function(){
     console.log('API funcionando e aguardando novas requisições ...')
 }) 
+
+
+// {
+//     "nome": "teste",
+//     "data_lancamento": "2000-10-10",
+//     "duracao": "01:20:00",
+//     "sinopse": "teste 2",
+//     "avaliacao": "1",
+//     "valor": "60",
+//     "capa": "mario"
+
+// }
