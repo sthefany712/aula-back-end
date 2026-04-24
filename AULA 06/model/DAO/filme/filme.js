@@ -72,22 +72,49 @@ const insertFilme = async function(filme) {
         return false
 
         //A controller é quem trata esse true ou false, retornando alguma numeração que sign alguma resposta
-        
 }
 
 //Função para atualizar um filme existente na tabela
 const updateFilme = async function(filme) {
-
 }
 
 //Função para retornar todos os dados da tabela de filme
 const selectAllFilme = async function (filme) { //selectAll (trás tudo)
-    
+    try {
+        //Script para retornar todos os filmes
+        let sql = `select * from tbl_filme order by id desc` //order by, para ordernar. Por estratégica, trás o último registro como primeiro
+
+        //Executa no BD o script SQL para retornar os filmes
+        let result = await knexConex.raw(sql)
+        
+        //Validaçãop/ verificar se o banco de dados é um Array
+        //Se o script SQL der erro, o BD não devolve um Array
+        if(Array.isArray(result)){ //verifica se o objt é um array, não a quantidade
+            return result[0]
+        }else{
+            return false
+        }
+    } catch (error) {
+        console.log(error);
+        return false          
+    }
 }
 
 //Função para retornar os dados do filme filtrando pelo ID
 const selectByIdFilme = async function (id) {
-    
+    try {
+        let sql = `select * from tbl_filme where id=${id}`
+
+        let result = await knexConex.raw(sql)
+
+        if(Array.isArray(result)){
+            return result [0]
+        }else{
+            return false
+        }
+    } catch (error) {
+        return false
+    }
 }
 
 //Função para excluir um filme pelo ID

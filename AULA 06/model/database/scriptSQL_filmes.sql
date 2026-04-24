@@ -44,14 +44,15 @@ alter table tbl_filme
 	change column avalicao avaliacao decimal(3,2) default null;
 
 
-
-
 								#2 Regras sobre values:
 			#colocar na mesma ordem dos atributos. Para evitar erros seguir a ordem da criação da tbl
 			#todos os values deve ser colado entre ''(simples) menos do tipo INT
 
 #Seleciona todas as colunas da tbl_filme, trás todos os dados da tabela
 select * from tbl_filme;
+
+delete from tbl_filme where id > 0
+
 
 
 

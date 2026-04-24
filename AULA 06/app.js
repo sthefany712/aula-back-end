@@ -1,6 +1,5 @@
 /*********************************************************************************************************
  * 
- * 
  * Para trabalhar com o body precisa instalar:  npm install body-parser
  * 
  ********************************************************************************************************/
@@ -29,7 +28,10 @@ const corsOptions = {
 //Configura as permissões da API atraves do CORS 
 app.use(cors(corsOptions))
 
-//ENDPOINTS
+//ENDPOINTS 
+//(O CRUD basico mantém a mesma assinatura da URL, muda apenas o post,get... o verbo que diferencia, por ex:
+// /v1/senai/locadora/inserir/filme, não precisa escrever INSERIR, pois o get já significa isso.)
+
 app.post('/v1/senai/locadora/filme', bodyParserJSON, async function (request, response){
     //Recebe o conteúdo dentro do body da requisição
     let dados = request.body
@@ -41,13 +43,31 @@ app.post('/v1/senai/locadora/filme', bodyParserJSON, async function (request, re
 
     response.status(result.status_code)
     response.json(result)
+})
 
+app.get('/v1/senai/locadora/filme', async function (request,response) {
+    let result = await controllerFilme.listarFilme()
+    
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/filme/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerFilme.buscarFilme(id)
+
+    response.status(result.status_code)
+    response.json(result)
 })
 
 app.listen(8080, function(){
-    console.log('API funcionando e aguardando novas requisições ...')
+    console.log('API funcionando e aguardando novas requisições...')
 }) 
 
+
+//Sempre que quiser filtrar pela PK (chave primária/ID) ela TEM que vir via parametro
+//Filtros que são via Query
 
 // {
 //     "nome": "teste",
