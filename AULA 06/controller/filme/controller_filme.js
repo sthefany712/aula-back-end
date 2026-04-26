@@ -69,6 +69,7 @@ const listarFilme = async function () {
 
     try {
         //Chama a função do DAO para retornar a lista de todos os filmes
+        //Função que vai buscar/acessar o BD
         let result = await filmeDAO.selectAllFilme()
         console.log(result);
         

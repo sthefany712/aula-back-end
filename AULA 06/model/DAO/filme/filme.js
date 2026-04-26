@@ -1,6 +1,5 @@
 /*********************************************************************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD no Banco de Dados MySQL na tabela
- *      Filme
+ * Objetivo: Arquivo responsável pelo CRUD no Banco de Dados MySQL na tabela Filme
  * Data: 15/04/2026
  * Autor: Marcel
  * Varsão: 1.0
@@ -85,6 +84,7 @@ const selectAllFilme = async function (filme) { //selectAll (trás tudo)
         let sql = `select * from tbl_filme order by id desc` //order by, para ordernar. Por estratégica, trás o último registro como primeiro
 
         //Executa no BD o script SQL para retornar os filmes
+        //O result salva a resposta do que foi executado no banco
         let result = await knexConex.raw(sql)
         
         //Validaçãop/ verificar se o banco de dados é um Array

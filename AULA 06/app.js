@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  * 
- * Para trabalhar com o body precisa instalar:  npm install body-parser
+ * Para trabalhar com o bodyParser precisa instalar:  npm install body-parser
  * 
  ********************************************************************************************************/
 
@@ -20,9 +20,9 @@ const app = express()
 
 //Conjunto de permissões a serem aplicadas no CORS da API
 const corsOptions = {
-    origin: ['*'],                                      //A origem da requisição, podendo ser um IP ou '*'- TODOS
-    methods: 'GET, POST, DELETE, OPTIONS',              //São os verbos que serão liberados na API (GET, POST, PUT e DELETE)
-    allowedHeaders: ['Content-type', 'Autorization']    //São permissões de cabeçalho do CORS 
+    origin: ['*'], //A origem da requisição, podendo ser um IP/URL ou '*'- TODOS
+    methods: 'GET, POST, DELETE, OPTIONS', //São os verbos que serão liberados na API (GET, POST, PUT e DELETE)
+    allowedHeaders: ['Content-type', 'Autorization'] //São permissões de cabeçalho do CORS 
 }
 
 //Configura as permissões da API atraves do CORS 
@@ -33,14 +33,18 @@ app.use(cors(corsOptions))
 // /v1/senai/locadora/inserir/filme, não precisa escrever INSERIR, pois o get já significa isso.)
 
 app.post('/v1/senai/locadora/filme', bodyParserJSON, async function (request, response){
-    //Recebe o conteúdo dentro do body da requisição
+    //Recebe o conteúdo dentro do body da requisição 
+    //Front vai enviar os dados através do body
+    //request recebe os dados do Front-end
     let dados = request.body
     
      //Recebe o content type da requisição para validar se é um Json
     let contentType = request.headers['content-type']
 
+    //Envia para a função (processa)
     let result = await controllerFilme.inserirNovoFilme(dados, contentType)
 
+    //Devolve uma resposta p/ o front-end
     response.status(result.status_code)
     response.json(result)
 })
