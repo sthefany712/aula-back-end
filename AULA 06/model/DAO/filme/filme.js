@@ -75,6 +75,7 @@ const insertFilme = async function(filme) {
 
 //Função para atualizar um filme existente na tabela
 const updateFilme = async function(filme) {
+    
 }
 
 //Função para retornar todos os dados da tabela de filme
