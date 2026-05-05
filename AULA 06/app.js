@@ -13,7 +13,7 @@ const bodyParser    = require('body-parser')
 const controllerFilme = require('./controller/filme/controller_filme.js')
 
 //Criando um objeto para manipular dados do body da API em formato JSON
-const bodyParserJSON = bodyParser.json()
+const bodyParserJSON = bodyParser.json() //é usado quando for enviar um JSON p/ a API
 
 //Criando um objeto para manipular o express
 const app = express()
@@ -65,7 +65,7 @@ app.get('/v1/senai/locadora/filme/:id', async function (request, response) {
     response.json(result)
 })
 
-app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request,response) {
+app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request, response) {
     //Recebe o contety type da requisição
     let contentType = request.headers['content-type']
     
@@ -77,6 +77,16 @@ app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request,
     //Chama a função de atualizar na controller e encaminha os dados, id e contenty-type
     //obedecendo a ordem de criação na função da controller
     let result = await controllerFilme.atualizarNovoFilme(dados, id, contentType) //mandar os agurmentos na ordem da controller
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/filme/:id', async function (request, response) {
+
+    let id = request.params.id
+
+    let result = await controllerFilme.excluirFilme(id)
 
     response.status(result.status_code)
     response.json(result)

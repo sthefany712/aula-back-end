@@ -85,7 +85,7 @@ const atualizarNovoFilme = async function (filme, id , contentType) {
                     //Adiciono o atributo id do filme no JSON para ser enviado para o DAO
                     filme.id = id
 
-                    //Chama a  função do DAO para atualizar o ifilme(dados e o ID)
+                    //Chama a  função do DAO para atualizar o filme(dados e o ID)
                     let result = await filmeDAO.updateFilme(filme)
 
                     if(result){
@@ -190,7 +190,35 @@ const buscarFilme = async function (id) {
 }
 
 //Função para excluir um filme
-const excluirFilme = async function () {
+const excluirFilme = async function (id) {
+
+    let messageJson = JSON.parse(JSON.stringify(config_message))
+    
+    try {
+        let resultBuscarID = await buscarFilme(id)
+        
+        if(resultBuscarID.status) {
+            let result = await filmeDAO.deleteFilme(id)
+
+            if(result){
+                messageJson.DEFAULT_MESSAGE.status = messageJson.SUCCES_DELETE.status
+                messageJson.DEFAULT_MESSAGE.status_code = messageJson.SUCCES_DELETE.status_code
+                messageJson.DEFAULT_MESSAGE.message = messageJson.SUCCES_DELETE.message
+
+                return messageJson.DEFAULT_MESSAGE
+
+            }else {
+                return messageJson.ERROR_INTERNAL_SERVER_CONTROLLER //500
+            }
+
+        }else {
+            return resultBuscarID //400 ou 404 ou 500
+        }
+
+
+    } catch (error) {
+        return messageJson.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
     
 }
 
