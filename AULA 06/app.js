@@ -65,7 +65,7 @@ app.get('/v1/senai/locadora/filme/:id', async function (request, response) {
     response.json(result)
 })
 
-app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request, response) {
+app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request,response) {
     //Recebe o contety type da requisição
     let contentType = request.headers['content-type']
     
