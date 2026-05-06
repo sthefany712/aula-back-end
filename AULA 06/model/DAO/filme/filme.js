@@ -29,50 +29,55 @@ const knexConfig = require('../../database_config_knex/knexFile.js') // ../para 
 //Criar a conexão com o BD Mysl
 const knexConex = knex(knexConfig.development)
 
-
  //Funções do CRUD para a tabela filme (a base p/ criar qualquer tabela)
 
 //Função para inserir dados na tabela de filme
-const insertFilme = async function(filme) { 
 
-    //nesse caso o parametro será um json (filme)
-    //copiei o código do MySQL
-    //Do jeito que vc escreveu os atributos no BD, devo escrever no json (filme), 
-    //se não a minha controller não vai aceitar e devolverá um 404, já que quem 'manda' no BD é o back. 
-    //Organize tudo MUITO bem!
+    const insertFilme = async function(filme){
+        try {
+            //nesse caso o parametro será um json (filme)
+            //copiei o código do MySQL
+            //Do jeito que vc escreveu os atributos no BD, devo escrever no json (filme), 
+            //se não a minha controller não vai aceitar e devolverá um 404, já que quem 'manda' no BD é o back. 
+            //Organize tudo MUITO bem!
+            
+            let sql = `
+            insert into tbl_filme (
+                nome,
+                data_lancamento,
+                duracao, 
+                sinopse, 
+                avaliacao, 
+                valor, 
+                capa
+                )
+            values (
+                '${filme.nome}',
+                '${filme.data_lancamento}',
+                '${filme.duracao}',
+                '${filme.sinopse}',
+                if('${filme.avaliacao}' = '', null, '${filme.avaliacao}'),
+                '${filme.valor}',
+                '${filme.capa}'
+                );`
+    
+            //Executar o ScriptSql no banco de dados
+            let result = await knexConex.raw(sql) //precisa colocar o await para que o BD faça a analise e consiga fazer devolutiva, se não ele passa direto pelo js
+            
+            //console.log(result);
+            
+            if(result)
+                return result[0].insertId //Retorna o ID gerado no BD
+            else
+                return false
 
-    let sql = `insert into tbl_filme (
-					nome, 
-					data_lacamento, 
-                    duracao, 
-                    sinopse, 
-                    avaliacao, 
-                    valor, 
-                    capa
-                        )
-                values (
-			        '${filme.nome}', 
-                    '${filme.data_lancamento}', 
-                    '${filme.duracao}',
-                    '${filme.sinopse}',
-                    if('${filme.avaliacao}' = '', null, '${filme.avaliacao}'),
-                    '${filme.valor}',
-                    '${filme.capa}'
-        );`
-
-    //Pego meu parametro (filme) . e coloco os atributos da tabela, EXATAMENTE como foram criados e dessa forma tudo fica mais claro e organizado.
-
-    //Executar o ScriptSQL no banco de dados
-    let result = await knexConex.raw(sql) //precisa colocar o await para que o BD faça a analise e consiga fazer devolutiva, se não ele passa direto pelo js
-
-    if(result){
-        return true
-    }else
-        return false
-
-        //A controller é quem trata esse true ou false, retornando alguma numeração que sign alguma resposta
-}
-
+            //A controller é quem trata esse true ou false, retornando alguma numeração que sign alguma resposta
+    
+        } catch (error) {
+            return false
+        }
+    }
+    
 //Função para atualizar um filme existente na tabela
 const updateFilme = async function(filme) {
      try {
@@ -87,6 +92,7 @@ const updateFilme = async function(filme) {
             capa =            '${filme.capa}'
             where id =         ${filme.id};
         `
+        
         let result = await knexConex.raw(sql)
 
         if(result)

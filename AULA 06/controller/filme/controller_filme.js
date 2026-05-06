@@ -20,7 +20,6 @@ const inserirNovoFilme = async function (filme,contentType) {
     //Criando um clone do objeto JSON para manipular a sua estrutura local sem
     //modificar a estrutura original
     //let message = config_message NÃO FUNCIONA COMO O CLONE DE UMA VARIÁVEL, já que é um OBJT 
-
     let message = JSON.parse(JSON.stringify(config_message)) //clone
     
     try {
@@ -36,10 +35,18 @@ const inserirNovoFilme = async function (filme,contentType) {
             } else {
                 //Encaminha os dados do filme para o DAO
                 let result = await filmeDAO.insertFilme(filme)
+
+                //console.log(result); - true
+                
                 if (result) { //status code 201
+                    //Criando o atributo ID no JSON do filme e colocando 
+                    //o ID gerado após do inser
+                    filme.id = result
+
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_CREATED_ITEM.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_CREATED_ITEM.status_code
                     message.DEFAULT_MESSAGE.message = message.SUCCESS_CREATED_ITEM.message
+                    message.DEFAULT_MESSAGE.response = filme 
                 } else {//status code 500
                     return message.ERROR_INTERNAL_SERVER_MODEL //Erro 500 model
                 }
@@ -50,8 +57,7 @@ const inserirNovoFilme = async function (filme,contentType) {
         }
 
     } catch (error) {
-        console.log(error);
-        
+    
         return message.ERROR_INTERNAL_SERVER_CONTROLLER// ERRO 500 controller
     }
 }
@@ -92,6 +98,7 @@ const atualizarNovoFilme = async function (filme, id , contentType) {
                         messageJson.DEFAULT_MESSAGE.status = messageJson.SUCCES_UPDATED_ITEM.status
                         messageJson.DEFAULT_MESSAGE.status_code = messageJson.SUCCES_UPDATED_ITEM.status_code
                         messageJson.DEFAULT_MESSAGE.message = messageJson.SUCCES_UPDATED_ITEM.message
+                        messageJson.DEFAULT_MESSAGE.response = filme 
 
                         return messageJson.DEFAULT_MESSAGE
 
@@ -164,7 +171,7 @@ const buscarFilme = async function (id) {
 
     try {
         //Validação para garantir que o ID seja válido
-        if(id == '' || id == null || id == undefined || isNaN(id)){
+        if( id == undefined || id == '' || id == null || isNaN(id)){
             message.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return message.ERROR_BAD_REQUEST //400
         }else{
@@ -195,69 +202,106 @@ const excluirFilme = async function (id) {
     let messageJson = JSON.parse(JSON.stringify(config_message))
     
     try {
+        //Validação do erro 400 e 404
         let resultBuscarID = await buscarFilme(id)
         
+        //Validação para verificar se o status é verdadeiro (se existe o filme)
         if(resultBuscarID.status) {
             let result = await filmeDAO.deleteFilme(id)
 
-            if(result){
-                messageJson.DEFAULT_MESSAGE.status = messageJson.SUCCES_DELETE.status
-                messageJson.DEFAULT_MESSAGE.status_code = messageJson.SUCCES_DELETE.status_code
-                messageJson.DEFAULT_MESSAGE.message = messageJson.SUCCES_DELETE.message
-
-                return messageJson.DEFAULT_MESSAGE
+            if(result) {
+                return messageJson.SUCCES_DELETED_ITEM //200 (Registro Excluído)
 
             }else {
-                return messageJson.ERROR_INTERNAL_SERVER_CONTROLLER //500
+                return messageJson.ERROR_INTERNAL_SERVER_MODEL //500 (controller)
             }
 
         }else {
             return resultBuscarID //400 ou 404 ou 500
         }
 
-
     } catch (error) {
+    
         return messageJson.ERROR_INTERNAL_SERVER_CONTROLLER
     }
-    
 }
 
 //Função para validar todos os dados de filme (obrigatórios,qtd de caracteres, etc..)
-const validarDados = async function (filme){
+//Função para validar todos os dados de filme
+const validarDados = async function(filme) {
 
-    let message = JSON.parse(JSON.stringify(config_message)) //ARRUMAR O MESSAGE
+    let messageJson = JSON.parse(JSON.stringify(config_message))
+    
+    // Validação primária: verifica se o body da requisição foi recebido
+    // Ocorre quando o Content-Type não é application/json ou o body está vazio
+    if (!filme) {
+        return messageJson.ERROR_BAD_REQUEST
+    }
 
-    if(filme.nome == ''|| filme.nome == null || filme.nome == undefined || filme.nome.length > 80) { //vazio é != de null
-        message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO' //400
-         return message.ERROR_BAD_REQUEST //400
+    // Validação do campo NOME:
+    // - Não pode ser vazio, nulo ou undefined
+    // - Não pode ultrapassar 80 caracteres (limite da coluna no banco)
+    if (filme.nome == undefined || filme.nome == '' || filme.nome == null ||  filme.nome.length > 80) {
 
-    } else if(filme.data_lancamento == '' || filme.data_lancamento == null || filme.data_lancamento == undefined || filme.data_lancamento.length != 10 ) {
-        message.ERROR_BAD_REQUEST.field = '[DATA_LANCAMENTO] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
+        messageJson.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
 
-    } else if(filme.duracao == '' || filme.duracao == null || filme.duracao == undefined || filme.duracao.length < 5 ) {
-        message.ERROR_BAD_REQUEST.field = '[DURACAO] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
+    // Validação do campo DATA_LANCAMENTO:
+    // - Não pode ser vazio, nulo ou undefined
+    // - Deve ter exatamente 10 caracteres (formato esperado: YYYY-MM-DD)
+    } else if (filme.data_lancamento == undefined || filme.data_lancamento == '' || filme.data_lancamento == null ||  filme.data_lancamento.length != 10) {
 
-    } else if(filme.sinopse == '' || filme.sinopse == null || filme.sinopse == undefined) {
-        message.ERROR_BAD_REQUEST.field = '[SINOPSE] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
+        messageJson.ERROR_BAD_REQUEST.field = '[data_lancamento] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
 
-    } else if(isNaN(filme.avaliacao) || filme.avaliacao.length > 3) { //não trato mais coisas pois ele não é obgt, tratei apenas o numero
-        message.ERROR_BAD_REQUEST.field = '[AVALIAÇÃO] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
+    // Validação do campo DURACAO:
+    // - Não pode ser vazio, nulo ou undefined
+    // - Deve ter no mínimo 5 caracteres (formato esperado: HH:MM)
+    } else if (filme.duracao == undefined || filme.duracao == '' || filme.duracao == null ||  filme.duracao.length < 5) {
 
-    } else if(filme.valor == '' || filme.valor == null == filme.valor == undefined || filme.valor.length > 5 || isNaN(filme.valor)) {
-        message.ERROR_BAD_REQUEST.field = '[VALOR] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
+        messageJson.ERROR_BAD_REQUEST.field = '[duração] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
 
-    } else if(filme.capa.length > 255) { 
-        message.ERROR_BAD_REQUEST.field = '[CAPA] INVÁLIDO'
-        return message.ERROR_BAD_REQUEST //400
-    } else{
-         return false
-    }    
+    // Validação do campo SINOPSE:
+    // - Não pode ser vazio, nulo ou undefined (sem limite de tamanho definido)
+    } else if (filme.sinopse == undefined || filme.sinopse == '' || filme.sinopse == null || filme.sinopse == undefined) {
+
+        messageJson.ERROR_BAD_REQUEST.field = '[sinopse] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
+
+    // Validação do campo AVALIACAO:
+    // - Deve ser um valor numérico (ex: 8.5)
+    // - toString() é necessário pois avaliacao pode chegar como number, não string
+    // - Não pode ultrapassar 3 caracteres (ex: "10" ou "9.5")
+    } else if (isNaN(filme.avaliacao) || filme.avaliacao.toString().length > 3) {
+
+        messageJson.ERROR_BAD_REQUEST.field = '[avaliacao] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400    
+
+    // Validação do campo VALOR:
+    // - Não pode ser vazio, nulo ou undefined
+    // - Deve ser um valor numérico (isNaN retorna true se NÃO for número)
+    } else if (filme.valor == undefined || filme.valor == '' || filme.valor == null ||  filme.valor.toString().split('.')[0].length > 3|| isNaN(filme.valor)) {
+
+        messageJson.ERROR_BAD_REQUEST.field = '[valor] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
+
+    // Validação do campo CAPA
+    // - Não pode ser nulo/undefined (verificado com !filme.capa)
+    // - URL ou nome do arquivo não pode ultrapassar 255 caracteres (limite da coluna no banco)
+    } else if (!filme.capa || filme.capa.length > 255) {
+
+        messageJson.ERROR_BAD_REQUEST.field = '[capa] INVÁLIDO'
+        return messageJson.ERROR_BAD_REQUEST  // HTTP 400
+
+
+    }else{
+        return false
+
+    }
+
 }
+
 
 module.exports = {
     inserirNovoFilme,
